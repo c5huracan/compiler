@@ -11,9 +11,21 @@ A educational compiler built from scratch that supports arithmetic expressions, 
 - **Code Generation**: Generate Python code from AST
 
 ## Architecture
-Text → Lexer → Tokens → Parser → AST → Evaluator → Result ↓ Code Generator → Python Code
 
-Copied!
+**Evaluation Pipeline:**
+Text → Lexer → Tokens → Parser → AST → Evaluator → Result
+
+**Code Generation Pipeline:**
+Text → Lexer → Tokens → Parser → AST → Code Generator → Python Code
+
+Both pipelines share the same front-end (Lexer and Parser) that produces an AST but have different back-ends.
+
+The AST can then be:
+- Evaluated to produce a result
+- Transformed into Python code
+
+This separation allows the same parsed structure to be used for multiple purposes.
+
 ## Components
 
 - `lexer.py` - Tokenization
@@ -27,21 +39,33 @@ Copied!
 ## Usage
 
 ### Interactive Mode
+
+```bash
 python main.py
+```
 
-Copied!
+```
+>>> 3 + 5 * 2
+Result: 13
+Code: (3 + (5 * 2))
 
-3 + 5 * 2 Result: 13 Code: (3 + (5 * 2))
+>>> x = 10
+Result: 10
+Code: x = 10
+Env: {'x': 10}
 
-x = 10 Result: 10 Code: x = 10 Env: {'x': 10}
+>>> x + 5
+Result: 15
+Code: (x + 5)
+Env: {'x': 10}
+```
 
-x + 5 Result: 15 Code: (x + 5) Env: {'x': 10}
-
-Copied!
 ### Run Tests
-python test_compiler.py
 
-Copied!
+```bash
+python test_compiler.py
+```
+
 ## Supported Syntax
 
 - **Arithmetic**: `+`, `-`, `*`, `/`
@@ -50,13 +74,21 @@ Copied!
 - **Assignment**: `x = 5`
 - **Expressions**: `x + 3 * (y - 2)`
 
-## Example
-from lexer import lexer from parser import Parser from evaluator import evaluate
+```python
+from lexer import lexer
+from parser import Parser
+from evaluator import evaluate
 
-Parse and evaluate
-tokens = lexer("x = 3 + 5") parser = Parser(tokens) ast = parser.statement() env = {} result = evaluate(ast, env) print(result) # 8 print(env) # {'x': 8}
+# Parse and evaluate
+tokens = lexer("x = 3 + 5")
+parser = Parser(tokens)
+ast = parser.statement()
+env = {}
+result = evaluate(ast, env)
+print(result)  # 8
+print(env)     # {'x': 8}
+```
 
-Copied!
 ## Learning Journey
 
 This compiler was built as a learning project to understand:
