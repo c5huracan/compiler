@@ -41,7 +41,7 @@ This separation allows the same parsed structure to be used for multiple purpose
 ### Interactive Mode
 
 ```bash
-python main.py
+python3 main.py
 ```
 
 ```
@@ -63,7 +63,7 @@ Env: {'x': 10}
 ### Run Tests
 
 ```bash
-python test_compiler.py
+python3 test_compiler.py
 ```
 
 ## Supported Syntax
